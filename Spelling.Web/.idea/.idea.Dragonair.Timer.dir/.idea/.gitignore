@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/.idea.Dragonair.Timer.iml
+# Datasource local storage ignored files
+/../../../../../../../:\src\Timer\Dragonair.Timer\.idea\.idea.Dragonair.Timer.dir\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
