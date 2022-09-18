@@ -1,14 +1,13 @@
 import * as signalR from '@microsoft/signalr';
 import { HubConnectionState } from '@microsoft/signalr';
-import { atom, selector, useRecoilCallback} from 'recoil';
-import { SessionStateDo} from '../Api/ApiClient';
+import { atom, selector, useRecoilCallback } from 'recoil';
+import { SessionStateDo } from '../Api/ApiClient';
 import { suspendable, Suspendable } from '../Helpers/suspendable';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSignalR } from './SignalRController';
 
-
 export const useCreateSessionCallback = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const signalR = useSignalR();
 
   return useRecoilCallback(
@@ -18,9 +17,9 @@ export const useCreateSessionCallback = () => {
 
         const session = signalR().invoke<SessionStateDo>('createSession');
 
-        session.then(x => {
-          history.push("/session/" + x.id)
-        })
+        session.then((x) => {
+          navigate('/session/' + x.id);
+        });
 
         set(sessionState, suspendable(session));
       },
@@ -34,15 +33,15 @@ export const useJoinSessionCallback = () => {
   return useRecoilCallback(
     ({ set }) =>
       (id: number) => {
-        const session = signalR().invoke<SessionStateDo>('joinSession', {sessionId: id});
+        const session = signalR().invoke<SessionStateDo>('joinSession', {
+          sessionId: id,
+        });
 
         set(sessionState, suspendable(session));
       },
     [],
   );
 };
-
-
 
 export const sessionState = atom<Suspendable<SessionStateDo | undefined>>({
   key: 'sessionState',
