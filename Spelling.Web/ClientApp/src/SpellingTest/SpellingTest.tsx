@@ -30,6 +30,7 @@ interface WordInputProps {
 const artyom = new Artyom();
 
 artyom.ArtyomVoicesIdentifiers['en-GB'] = [
+  'Microsoft Libby Online (Natural) - English (United Kingdom)',
   'Microsoft Mia Online (Natural) - English (United Kingdom)',
   'Microsoft Susan - English (United Kingdom)',
   'Microsoft Guy Online (Natural) - English (United States)',
@@ -97,16 +98,15 @@ interface WordData {
 }
 
 const wordsData: WordData[] = [
-  { word: 'Monday' },
-  { word: 'Tuesday' },
-  { word: 'Wednesday' },
-  { word: 'Thursday' },
-  { word: 'Friday' },
-  { word: 'Saturday' },
-  { word: 'Sunday' },
-  { word: 'week' },
-  { word: 'seven' },
-  { word: 'I love you alexandra' },
+  { word: 'Numbers' },
+  { word: 'Forwards' },
+  { word: 'Backwards' },
+  { word: 'Hundreds' },
+  { word: 'Image' },
+  { word: 'Digit' },
+  { word: 'Sequence' },
+  { word: 'Missing' },
+  { word: 'Value' },
 ];
 
 interface FormValues {
@@ -204,7 +204,6 @@ const store = proxy({
   voice: voices[0],
 });
 
-subscribe(state);
 console.log('Vocie: ', store.voice);
 
 setTimeout(() => {
