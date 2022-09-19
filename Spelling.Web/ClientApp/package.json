@@ -2,7 +2,7 @@
   "scripts": {
     "start": "vite",
     "start-session": "vite --mode sessions",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview",
     "test": "web-test-runner \"src/**/*.test.tsx\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",

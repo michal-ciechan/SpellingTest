@@ -11,7 +11,6 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import Artyom from 'artyom.js';
 import { Field, Form, Formik, FormikHelpers, FormikValues } from 'formik';
 import { ErrorBoundary } from '../Helpers/ErrorBoundary';
 import { FaPlay } from 'react-icons/fa';
@@ -27,43 +26,28 @@ interface WordInputProps {
   data: WordData;
 }
 
-const artyom = new Artyom();
+function speak(...params: string[]) {
+  window.speechSynthesis.pause();
+  window.speechSynthesis.cancel();
 
-artyom.ArtyomVoicesIdentifiers['en-GB'] = [
-  'Microsoft Libby Online (Natural) - English (United Kingdom)',
-  'Microsoft Mia Online (Natural) - English (United Kingdom)',
-  'Microsoft Susan - English (United Kingdom)',
-  'Microsoft Guy Online (Natural) - English (United States)',
-  'Microsoft George - English (United Kingdom)',
-  'Google UK English Female',
-  'Google UK English Male',
-  'en-GB',
-  'en_GB',
-];
+  for (const word of params) {
+    const msg = new SpeechSynthesisUtterance(word);
 
-artyom.initialize({ lang: 'en-GB' });
-
-const WordInput = (props: WordInputProps) => {
-  const playClick = () => {
-    console.log(`Play Word ${props.data.word}`);
-
-    window.speechSynthesis.pause();
-    window.speechSynthesis.cancel();
-
-    const msg = new SpeechSynthesisUtterance(props.data.word);
-    console.log(store.voice.name);
     msg.lang = store.voice.lang;
     msg.voice = store.voice;
 
     window.speechSynthesis.speak(msg);
+  }
+}
 
-    const msg2 = new SpeechSynthesisUtterance('The word is ' + props.data.word);
-    msg2.lang = store.voice.lang;
-    msg2.voice = store.voice;
+const WordInput = (props: WordInputProps) => {
+  const playClick = () => {
+    const word = props.data.word;
+    console.log(`Play Word ${word}`);
 
-    window.speechSynthesis.speak(msg2);
+    console.log(store.voice.name);
 
-    console.log(artyom.getVoices());
+    speak(word, 'The word is ' + word);
   };
 
   const name = `words[${props.number - 1}]`;
@@ -160,7 +144,7 @@ const SpellingTest = () => {
         text = 'Congratulation, ' + text;
       }
 
-      artyom.say(text);
+      speak(text);
 
       actions.setSubmitting(false);
     }, 1000);
