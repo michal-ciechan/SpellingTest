@@ -1,9 +1,14 @@
 import { proxy, ref } from 'valtio';
 
-const voices = window.speechSynthesis
+let allVoices = window.speechSynthesis
   .getVoices()
-  .filter((x) => x.name.toLowerCase().includes('english'))
-  .map((x) => ref(x));
+  .filter((x) => x.name.toLowerCase().includes('english'));
+
+if (allVoices.length == 0) {
+  allVoices = window.speechSynthesis.getVoices();
+}
+
+const voices = allVoices.map((x) => ref(x));
 
 export const voiceStore = proxy({
   voices: ref(voices),
@@ -33,8 +38,15 @@ export const voiceSortValue = (x: SpeechSynthesisVoice): number => {
 console.log('Vocie: ', voiceStore.voice);
 
 setTimeout(() => {
-  const voices = window.speechSynthesis
+  let allVoices = window.speechSynthesis
     .getVoices()
+    .filter((x) => x.name.toLowerCase().includes('english'));
+
+  if (allVoices.length == 0) {
+    allVoices = window.speechSynthesis.getVoices();
+  }
+
+  const voices = allVoices
     .filter((x) => x.name.toLowerCase().includes('english'))
     .sort((a, b) => voiceSortValue(b) - voiceSortValue(a))
     .map((x) => ref(x));
