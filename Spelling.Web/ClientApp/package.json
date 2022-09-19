@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.10.4",
+    "@microsoft/applicationinsights-web": "^2.8.7",
     "@microsoft/signalr": "^6.0.9",
     "artyom.js": "^1.0.6",
     "chakra-react-select": "^4.2.2",

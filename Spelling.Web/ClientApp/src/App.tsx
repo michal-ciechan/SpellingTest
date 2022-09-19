@@ -15,6 +15,16 @@ import { SessionInfo } from './Session/SessionInfo';
 import { Controllers } from './Controllers';
 import { BrowserRouter } from 'react-router-dom';
 import SpellingTest from './SpellingTest/SpellingTest';
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+
+const appInsights = new ApplicationInsights({
+  config: {
+    connectionString:
+      'InstrumentationKey=37071687-29ff-43ac-8b58-f738db0a7448;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/',
+  },
+});
+appInsights.loadAppInsights();
+appInsights.trackPageView(); // Manually call trackPageView to establish the current user/session/pageview
 
 interface AppProps {}
 
