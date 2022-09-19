@@ -48,33 +48,30 @@ const theme = extendTheme({
 function App({}: AppProps) {
   console.debug('rendering app');
 
-  const app = <StateInspector name="App">
-    <RecoilRoot>
-      {/*<DebugObserver />*/}
-      {/*<RecoilLogger />*/}
-      <ChakraProvider theme={theme}>
-        <BrowserRouter>
-          <CSSReset />
-          <Center height="100vh">
-            <SpellingTest />
-          </Center>
-          <Controllers />
-        </BrowserRouter>
-      </ChakraProvider>
-    </RecoilRoot>
-  </StateInspector>;
+  const app = (
+    <StateInspector name="App">
+      <RecoilRoot>
+        {/*<DebugObserver />*/}
+        {/*<RecoilLogger />*/}
+        <ChakraProvider theme={theme}>
+          <BrowserRouter>
+            <CSSReset />
+            <Center minHeight="100vh" padding="0.75em">
+              <SpellingTest />
+            </Center>
+            <Controllers />
+          </BrowserRouter>
+        </ChakraProvider>
+      </RecoilRoot>
+    </StateInspector>
+  );
 
   const useStrictMode = import.meta.env.USE_STRICT_MODE;
 
-  if(!useStrictMode)
-    return app;
+  if (!useStrictMode) return app;
 
-  console.log("Using StrictMode.")
-  return (
-    <React.StrictMode>
-      {app}
-    </React.StrictMode>
-  );
+  console.log('Using StrictMode.');
+  return <React.StrictMode>{app}</React.StrictMode>;
 }
 
 export default React.memo(App);

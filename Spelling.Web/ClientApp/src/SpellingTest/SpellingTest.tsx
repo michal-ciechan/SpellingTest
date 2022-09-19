@@ -9,11 +9,14 @@ import {
   Box,
   BoxProps,
   Button,
+  Center,
+  Heading,
   Icon,
   Input,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
+  Spacer,
   Stack,
   useDisclosure,
   useToast,
@@ -167,56 +170,73 @@ const SpellingTest = () => {
 
   return (
     <ErrorBoundary>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {(props) => (
-          <Form autoComplete="off">
-            <div>
-              <Stack width="400px">
-                {wordsData.map((word, index) => (
-                  <WordInput number={index + 1} data={word} key={index} />
-                ))}
-                <Button
-                  size="lg"
-                  height="32"
-                  fontSize="6xl"
-                  colorScheme="green"
-                  isLoading={props.isSubmitting}
-                  type="submit"
-                >
-                  CHECK
-                </Button>
+      <div
+        style={{
+          display: 'flex',
+          justifyItems: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          {(props) => (
+            <Form autoComplete="off">
+              <Center>
+                <Stack width="95vw" maxWidth="400px">
+                  <Center>
+                    <Heading>Torre C of E</Heading>
+                  </Center>
+                  <Center>
+                    <Heading>Year 3/4</Heading>
+                  </Center>
+                  <Center>
+                    <Heading>
+                      16<sup>th</sup> Sep 2022
+                    </Heading>
+                  </Center>
+                  {wordsData.map((word, index) => (
+                    <WordInput number={index + 1} data={word} key={index} />
+                  ))}
+                  <Button
+                    size="lg"
+                    height="32"
+                    fontSize="6xl"
+                    colorScheme="green"
+                    isLoading={props.isSubmitting}
+                    type="submit"
+                  >
+                    CHECK
+                  </Button>
+                </Stack>
+              </Center>
+              <Stack width="800px" maxWidth="95vw">
+                <Spacer />
+                <Select
+                  options={voices}
+                  value={selectedVoice}
+                  onChange={(x) => (voiceStore.voice = x!.value)}
+                  styles={{ width: 'auto' }}
+                />
               </Stack>
-              <InputGroup style={{ maxWidth: '100vw' }}>
-                <InputLeftAddon>Voice</InputLeftAddon>
+            </Form>
+          )}
+        </Formik>
 
-                <div>
-                  <Select
-                    options={voices}
-                    value={selectedVoice}
-                    onChange={(x) => (voiceStore.voice = x!.value)}
-                  />
-                </div>
-              </InputGroup>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        <AlertDialog isOpen={isOpen} onClose={onClose}>
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Score
+              </AlertDialogHeader>
 
-      <AlertDialog isOpen={isOpen} onClose={onClose}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Score
-            </AlertDialogHeader>
+              <AlertDialogBody>
+                You got {store.score} out of {store.words.length}
+              </AlertDialogBody>
 
-            <AlertDialogBody>
-              You got {store.score} out of {store.words.length}
-            </AlertDialogBody>
-
-            <AlertDialogFooter>{alertFooterText()}</AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+              <AlertDialogFooter>{alertFooterText()}</AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </div>
     </ErrorBoundary>
   );
 };
