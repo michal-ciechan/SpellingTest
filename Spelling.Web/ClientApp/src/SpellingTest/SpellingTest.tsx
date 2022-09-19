@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   BoxProps,
   Button,
@@ -9,15 +15,16 @@ import {
   InputLeftAddon,
   InputRightAddon,
   Stack,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { Field, Form, Formik, FormikHelpers, FormikValues } from 'formik';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { ErrorBoundary } from '../Helpers/ErrorBoundary';
 import { FaPlay } from 'react-icons/fa';
 import { Select } from 'chakra-react-select';
-import create from 'zustand';
-import { proxy, ref, subscribe, useSnapshot } from 'valtio';
-import { derive } from 'valtio/utils';
+import { proxy, ref, useSnapshot } from 'valtio';
+import { voiceStore, voiceSortValue } from './SpeechVoicesStore';
 
 export const MotionBox = motion<BoxProps>(Box);
 
@@ -33,8 +40,8 @@ function speak(...params: string[]) {
   for (const word of params) {
     const msg = new SpeechSynthesisUtterance(word);
 
-    msg.lang = store.voice.lang;
-    msg.voice = store.voice;
+    msg.lang = voiceStore.voice.lang;
+    msg.voice = voiceStore.voice;
 
     window.speechSynthesis.speak(msg);
   }
@@ -45,7 +52,7 @@ const WordInput = (props: WordInputProps) => {
     const word = props.data.word;
     console.log(`Play Word ${word}`);
 
-    console.log(store.voice.name);
+    console.log(voiceStore.voice.name);
 
     speak(word, 'The word is ' + word);
   };
@@ -65,8 +72,9 @@ const WordInput = (props: WordInputProps) => {
           <Input
             {...field}
             placeholder={`Enter Word ${props.number}`}
-            autoComplete="false"
+            autoComplete="off"
             autoCorrect="false"
+            list="autocompleteOff"
             onFocus={playClick}
           />
           <InputRightAddon
@@ -87,18 +95,6 @@ interface WordData {
   word: string;
 }
 
-const wordsData: WordData[] = [
-  { word: 'numbers' },
-  { word: 'forwards' },
-  { word: 'backwards' },
-  { word: 'hundreds' },
-  { word: 'Image' },
-  { word: 'Digit' },
-  { word: 'Sequence' },
-  { word: 'Missing' },
-  { word: 'Value' },
-];
-
 interface FormValues {
   words: string[];
 }
@@ -108,7 +104,7 @@ const SpellingTest = () => {
     words: wordsData.map(() => ''),
   };
 
-  const snap = useSnapshot(store);
+  const snap = useSnapshot(voiceStore);
 
   const voices = snap.voices.map((x) => ({
     label: x.name,
@@ -117,45 +113,63 @@ const SpellingTest = () => {
 
   const selectedVoice = voices.find((x) => x.value === snap.voice);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const onSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
-    setTimeout(() => {
-      // alert(JSON.stringify(values, null, 2));
+    // alert(JSON.stringify(values, null, 2));
 
-      let score = 0;
+    let score = 0;
 
-      for (let i = 0; i < values.words.length; i++) {
-        const value = values.words[i];
-        const wordData = wordsData[i];
+    for (let i = 0; i < values.words.length; i++) {
+      const value = values.words[i];
+      const wordData = wordsData[i];
 
-        if (
-          value?.toLowerCase().trim() === wordData.word?.toLowerCase().trim()
-        ) {
-          score++;
-          wordData.status = 'success';
-        } else {
-          wordData.status = 'error';
-        }
+      if (value?.toLowerCase().trim() === wordData.word?.toLowerCase().trim()) {
+        score++;
+        wordData.status = 'success';
+      } else {
+        wordData.status = 'error';
       }
+    }
 
-      let text = `You got ${score} out of ${wordsData.length}`;
+    const text = `You got ${score} out of ${wordsData.length}`;
 
-      const percent = score / wordsData.length;
+    const percent = score / wordsData.length;
 
-      if (percent >= 1) {
-        text = 'Congratulation, ' + text;
-      }
+    store.score = score;
+    store.scorePercent = percent;
 
-      speak(text);
+    speak(text, alertFooterText());
 
-      actions.setSubmitting(false);
-    }, 1000);
+    actions.setSubmitting(false);
+    onOpen();
   };
+
+  function alertFooterText() {
+    if (store.scorePercent >= 1) {
+      return 'Congratulations';
+    }
+
+    if (store.scorePercent >= 0.9) {
+      return 'Almost!';
+    }
+
+    if (store.scorePercent >= 0.8) {
+      return 'Well Done!';
+    }
+
+    if (store.scorePercent >= 0.4) {
+      return 'Nice Try!';
+    }
+
+    return 'Keep Practicing!';
+  }
 
   return (
     <ErrorBoundary>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {(props) => (
-          <Form>
+          <Form autoComplete="off">
             <div>
               <Stack width="400px">
                 {wordsData.map((word, index) => (
@@ -172,14 +186,14 @@ const SpellingTest = () => {
                   CHECK
                 </Button>
               </Stack>
-              <InputGroup>
+              <InputGroup style={{ maxWidth: '100vw' }}>
                 <InputLeftAddon>Voice</InputLeftAddon>
 
-                <div style={{ width: '800px' }}>
+                <div>
                   <Select
                     options={voices}
                     value={selectedVoice}
-                    onChange={(x) => (store.voice = x!.value)}
+                    onChange={(x) => (voiceStore.voice = x!.value)}
                   />
                 </div>
               </InputGroup>
@@ -187,53 +201,43 @@ const SpellingTest = () => {
           </Form>
         )}
       </Formik>
+
+      <AlertDialog isOpen={isOpen} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Score
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              You got {store.score} out of {store.words.length}
+            </AlertDialogBody>
+
+            <AlertDialogFooter>{alertFooterText()}</AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </ErrorBoundary>
   );
 };
 
-const voices = window.speechSynthesis
-  .getVoices()
-  .filter((x) => x.name.toLowerCase().includes('english'))
-  .map((x) => ref(x));
+const wordsData: WordData[] = [
+  { word: 'numbers' },
+  { word: 'forwards' },
+  { word: 'backwards' },
+  { word: 'hundreds' },
+  { word: 'thousand' },
+  { word: 'Image' },
+  { word: 'Digit' },
+  { word: 'Sequence' },
+  { word: 'Missing' },
+  { word: 'Value' },
+];
 
 const store = proxy({
-  voices: ref(voices),
-  voice: voices[0],
+  words: wordsData,
+  score: 0,
+  scorePercent: 0,
 });
-
-console.log('Vocie: ', store.voice);
-
-setTimeout(() => {
-  const voices = window.speechSynthesis
-    .getVoices()
-    .filter((x) => x.name.toLowerCase().includes('english'))
-    .sort((a, b) => voiceSortValue(b) - voiceSortValue(a))
-    .map((x) => ref(x));
-
-  store.voices = ref(voices);
-  store.voice = voices[0];
-
-  console.log('Voice: ', store.voice);
-}, 5);
-
-const voiceSortValue = (x: SpeechSynthesisVoice): number => {
-  let n = 0;
-
-  const name = x.name.toLowerCase();
-
-  if (name.includes('united kingdom')) {
-    n += 100;
-  } else if (name.includes('united state')) {
-    n += 50;
-  } else if (name.includes('australia')) {
-    n += 30;
-  }
-
-  if (name.includes('natural')) {
-    n += 10;
-  }
-
-  return n;
-};
 
 export default SpellingTest;
