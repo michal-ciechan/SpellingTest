@@ -67,6 +67,7 @@ const WordInput = (props: WordInputProps) => {
             placeholder={`Enter Word ${props.number}`}
             autoComplete="false"
             autoCorrect="false"
+            onFocus={playClick}
           />
           <InputRightAddon
             bgColor="green.500"
@@ -118,7 +119,7 @@ const SpellingTest = () => {
 
   const onSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
 
       let score = 0;
 
@@ -140,7 +141,7 @@ const SpellingTest = () => {
 
       const percent = score / wordsData.length;
 
-      if (score >= 1) {
+      if (percent >= 1) {
         text = 'Congratulation, ' + text;
       }
 
