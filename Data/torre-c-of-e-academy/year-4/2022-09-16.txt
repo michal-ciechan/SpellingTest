@@ -2,6 +2,7 @@ Numbers
 Forwards
 Backwards
 Hundreds
+Thousand
 Image
 Digit
 Sequence
