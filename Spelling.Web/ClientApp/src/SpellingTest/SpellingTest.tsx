@@ -78,7 +78,12 @@ const WordInput = (props: WordInputProps) => {
             textAlign="center"
             justifyContent="center"
           />
-          <Input {...field} placeholder={`Enter Word ${props.number}`} />
+          <Input
+            {...field}
+            placeholder={`Enter Word ${props.number}`}
+            autoComplete="false"
+            autoCorrect="false"
+          />
           <InputRightAddon
             bgColor="green.500"
             _hover={{ bgColor: 'darkGreen' }}
@@ -98,10 +103,10 @@ interface WordData {
 }
 
 const wordsData: WordData[] = [
-  { word: 'Numbers' },
-  { word: 'Forwards' },
-  { word: 'Backwards' },
-  { word: 'Hundreds' },
+  { word: 'numbers' },
+  { word: 'forwards' },
+  { word: 'backwards' },
+  { word: 'hundreds' },
   { word: 'Image' },
   { word: 'Digit' },
   { word: 'Sequence' },
@@ -137,7 +142,9 @@ const SpellingTest = () => {
         const value = values.words[i];
         const wordData = wordsData[i];
 
-        if (value === wordData.word) {
+        if (
+          value?.toLowerCase().trim() === wordData.word?.toLowerCase().trim()
+        ) {
           score++;
           wordData.status = 'success';
         } else {
@@ -145,9 +152,11 @@ const SpellingTest = () => {
         }
       }
 
-      let text = `You got ${score} out of 10`;
+      let text = `You got ${score} out of ${wordsData.length}`;
 
-      if (score == 10) {
+      const percent = score / wordsData.length;
+
+      if (score >= 1) {
         text = 'Congratulation, ' + text;
       }
 
@@ -197,7 +206,10 @@ const SpellingTest = () => {
   );
 };
 
-const voices = window.speechSynthesis.getVoices().map((x) => ref(x));
+const voices = window.speechSynthesis
+  .getVoices()
+  .filter((x) => x.name.toLowerCase().includes('english'))
+  .map((x) => ref(x));
 
 const store = proxy({
   voices: ref(voices),
@@ -207,12 +219,36 @@ const store = proxy({
 console.log('Vocie: ', store.voice);
 
 setTimeout(() => {
-  const voices = window.speechSynthesis.getVoices().map((x) => ref(x));
+  const voices = window.speechSynthesis
+    .getVoices()
+    .filter((x) => x.name.toLowerCase().includes('english'))
+    .sort((a, b) => voiceSortValue(b) - voiceSortValue(a))
+    .map((x) => ref(x));
 
   store.voices = ref(voices);
   store.voice = voices[0];
 
   console.log('Voice: ', store.voice);
 }, 5);
+
+const voiceSortValue = (x: SpeechSynthesisVoice): number => {
+  let n = 0;
+
+  const name = x.name.toLowerCase();
+
+  if (name.includes('united kingdom')) {
+    n += 100;
+  } else if (name.includes('united state')) {
+    n += 50;
+  } else if (name.includes('australia')) {
+    n += 30;
+  }
+
+  if (name.includes('natural')) {
+    n += 10;
+  }
+
+  return n;
+};
 
 export default SpellingTest;
