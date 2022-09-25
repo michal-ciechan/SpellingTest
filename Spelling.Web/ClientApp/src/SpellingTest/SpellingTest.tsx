@@ -72,7 +72,7 @@ const WordInput = (props: WordInputProps) => {
 
     console.log(voiceStore.voice.name);
 
-    speak(word, 'The word is ' + word);
+    speak(word, props.data.phrase, 'The word is ' + word);
 
     fakeInput.current?.focus();
   };
@@ -179,6 +179,7 @@ const WordInput = (props: WordInputProps) => {
 interface WordData {
   status?: undefined | 'success' | 'error';
   word: string;
+  phrase: string;
 }
 
 interface FormValues {
@@ -260,7 +261,7 @@ const SpellingTest = () => {
                     </Center>
                     <Center>
                       <Heading>
-                        16<sup>th</sup> Sep 2022
+                        23<sup>rd</sup> Sep 2022
                       </Heading>
                     </Center>
                     {wordsData.map((word, index) => (
@@ -383,16 +384,16 @@ function alertFooterText() {
 }
 
 const wordsData: WordData[] = [
-  { word: 'numbers' },
-  { word: 'forwards' },
-  { word: 'backwards' },
-  { word: 'hundreds' },
-  { word: 'thousand' },
-  { word: 'Image' },
-  { word: 'Digit' },
-  { word: 'Sequence' },
-  { word: 'Missing' },
-  { word: 'Value' },
+  { word: 'there', phrase: 'Could you go over there' },
+  { word: 'their', phrase: 'This is their toy' },
+  { word: "they're", phrase: "Those kids, they're very happy" },
+  { word: 'to', phrase: 'Do you need to go to the toilet' },
+  { word: 'too', phrase: 'I like reading my book too' },
+  { word: 'two', phrase: 'I have two apples' },
+  { word: 'wait', phrase: 'We need to wait for mummy' },
+  { word: 'weight', phrase: 'The weight of a pencil is not very much' },
+  { word: 'whole', phrase: 'How did you eat the whole cake' },
+  { word: 'hole', phrase: 'A fox run away into a hole' },
 ];
 
 const store = proxy({
