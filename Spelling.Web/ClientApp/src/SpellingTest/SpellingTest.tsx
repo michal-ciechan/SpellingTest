@@ -304,7 +304,7 @@ const SpellingTest = () => {
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Score
+                Score - {new Date().toLocaleString()}
               </AlertDialogHeader>
 
               <AlertDialogBody>
