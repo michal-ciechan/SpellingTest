@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './App.css';
 import {
   Center,
   ChakraProvider,
   CSSReset,
   extendTheme,
+  Spinner,
+  Stack,
   ThemeConfig,
 } from '@chakra-ui/react';
-import Timer from './Timer/Timer';
 import { RecoilRoot } from 'recoil';
-import { Alarm } from './Timer/alarms/Alarm';
 import { StateInspector } from 'reinspect';
-import { SessionInfo } from './Session/SessionInfo';
 import { Controllers } from './Controllers';
 import { BrowserRouter } from 'react-router-dom';
 import SpellingTest from './SpellingTest/SpellingTest';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ErrorBoundary } from './Helpers/ErrorBoundary';
+import {
+  StatefulSuspense,
+  StatefulSuspenseContext,
+  SuspenseFallback,
+} from './StatefulSuspenseContext';
 
 const appInsights = new ApplicationInsights({
   config: {
@@ -25,6 +31,15 @@ const appInsights = new ApplicationInsights({
 });
 appInsights.loadAppInsights();
 appInsights.trackPageView(); // Manually call trackPageView to establish the current user/session/pageview
+
+// Create a client
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 interface AppProps {}
 
@@ -59,21 +74,29 @@ function App({}: AppProps) {
   console.debug('rendering app');
 
   const app = (
-    <StateInspector name="App">
-      <RecoilRoot>
-        {/*<DebugObserver />*/}
-        {/*<RecoilLogger />*/}
-        <ChakraProvider theme={theme}>
-          <BrowserRouter>
-            <CSSReset />
-            <Center minHeight="100vh" padding="0.75em">
-              <SpellingTest />
-            </Center>
-            <Controllers />
-          </BrowserRouter>
-        </ChakraProvider>
-      </RecoilRoot>
-    </StateInspector>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <StateInspector name="App">
+          <RecoilRoot>
+            {/*<DebugObserver />*/}
+            {/*<RecoilLogger />*/}
+            <ChakraProvider theme={theme}>
+              <BrowserRouter>
+                <CSSReset />
+                <Center minHeight="100vh" padding="0.75em">
+                  <ErrorBoundary>
+                    <StatefulSuspense>
+                      <SpellingTest />
+                    </StatefulSuspense>
+                  </ErrorBoundary>
+                </Center>
+                <Controllers />
+              </BrowserRouter>
+            </ChakraProvider>
+          </RecoilRoot>
+        </StateInspector>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 
   const useStrictMode = import.meta.env.USE_STRICT_MODE;

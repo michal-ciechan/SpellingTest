@@ -1,4 +1,9 @@
-import React, { MutableRefObject, useRef } from 'react';
+import React, {
+  MutableRefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -37,8 +42,12 @@ import { ErrorBoundary } from '../Helpers/ErrorBoundary';
 import { FaPlay } from 'react-icons/fa';
 import { Select } from 'chakra-react-select';
 import { proxy, ref, useSnapshot } from 'valtio';
-import { voiceStore, voiceSortValue } from './SpeechVoicesStore';
+import { voiceStore, voiceSortValue, getVoices } from './SpeechVoicesStore';
 import { proxySet } from 'valtio/utils';
+import { useQuery } from 'react-query';
+import { useSuspendable } from '../Helpers/suspendable';
+import { useStatefulSuspense } from '../StatefulSuspenseContext';
+import { useStatefulSuspense } from '../StatefulSuspenseContext';
 
 export const MotionBox = motion<BoxProps>(Box);
 
@@ -50,6 +59,9 @@ interface WordInputProps {
 }
 
 function speak(...params: string[]) {
+  if (!voiceStore.voice) {
+    throw 'No voice selected';
+  }
   window.speechSynthesis.pause();
   window.speechSynthesis.cancel();
 
@@ -70,7 +82,7 @@ const WordInput = (props: WordInputProps) => {
     const word = props.data.word;
     console.log(`Play Word ${word}`);
 
-    console.log(voiceStore.voice.name);
+    console.log(voiceStore.voice?.name);
 
     speak(word, props.data.phrase, 'The word is ' + word);
 
@@ -78,6 +90,7 @@ const WordInput = (props: WordInputProps) => {
   };
 
   const name = `words[${props.number - 1}]`;
+
   function fixCircularReferences() {
     const defs = {};
     return (k, v) => {
@@ -187,13 +200,21 @@ interface FormValues {
 }
 
 const SpellingTest = () => {
+  const suspense = useStatefulSuspense();
+
+  suspense.message = 'Loading Voices';
+
+  const queryPromise = useQuery('voices', getVoices);
+
+  const rawVoices = queryPromise.data!;
+
   const initialValues: FormValues = {
     words: wordsData.map(() => ''),
   };
 
   const snap = useSnapshot(voiceStore);
 
-  const voices = snap.voices.map((x) => ({
+  const voices = rawVoices.map((x) => ({
     label: x.name,
     value: x,
   }));
@@ -238,91 +259,95 @@ const SpellingTest = () => {
     onOpen();
   };
 
+  const alertRef = useRef<HTMLButtonElement>(null);
+
   return (
-    <ErrorBoundary>
-      <div
-        style={{
-          display: 'flex',
-          justifyItems: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Stack>
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
-            {(props) => (
-              <Form autoComplete="off">
-                <Center>
-                  <Stack width="95vw" maxWidth="400px">
-                    <Center>
-                      <Heading>Torre C of E</Heading>
-                    </Center>
-                    <Center>
-                      <Heading>Year 3/4</Heading>
-                    </Center>
-                    <Center>
-                      <Heading>
-                        23<sup>rd</sup> Sep 2022
-                      </Heading>
-                    </Center>
-                    {wordsData.map((word, index) => (
-                      <WordInput
-                        number={index + 1}
-                        data={word}
-                        key={index}
-                        currentRef={refs[index]}
-                        nextRef={refs[index + 1]}
-                      />
-                    ))}
-                    <Button
-                      size="lg"
-                      height="32"
-                      fontSize="6xl"
-                      colorScheme="green"
-                      isLoading={props.isSubmitting}
-                      type="submit"
-                    >
-                      CHECK
-                    </Button>
-                  </Stack>
-                </Center>
-                <Stack width="800px" maxWidth="95vw">
-                  <Spacer />
-                  <Select
-                    options={voices}
-                    value={selectedVoice}
-                    onChange={(x) => (voiceStore.voice = x!.value)}
-                    styles={{ width: 'auto' }}
-                  />
+    <div
+      style={{
+        display: 'flex',
+        justifyItems: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Stack>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          {(props) => (
+            <Form autoComplete="off">
+              <Center>
+                <Stack width="95vw" maxWidth="400px">
+                  <Center>
+                    <Heading>Torre C of E</Heading>
+                  </Center>
+                  <Center>
+                    <Heading>Year 3/4</Heading>
+                  </Center>
+                  <Center>
+                    <Heading>
+                      23<sup>rd</sup> Sep 2022
+                    </Heading>
+                  </Center>
+                  {wordsData.map((word, index) => (
+                    <WordInput
+                      number={index + 1}
+                      data={word}
+                      key={index}
+                      currentRef={refs[index]}
+                      nextRef={refs[index + 1]}
+                    />
+                  ))}
+                  <Button
+                    size="lg"
+                    height="32"
+                    fontSize="6xl"
+                    colorScheme="green"
+                    isLoading={props.isSubmitting}
+                    type="submit"
+                  >
+                    CHECK
+                  </Button>
                 </Stack>
-              </Form>
-            )}
-          </Formik>
-          <DebugOutput />
-        </Stack>
+              </Center>
+              <Stack width="800px" maxWidth="95vw">
+                <Spacer />
+                <Select
+                  options={voices}
+                  value={selectedVoice}
+                  onChange={(x) => (voiceStore.voice = x!.value)}
+                  styles={{ width: 'auto' }}
+                />
+              </Stack>
+            </Form>
+          )}
+        </Formik>
+        <DebugOutput />
+      </Stack>
 
-        <AlertDialog isOpen={isOpen} onClose={onClose}>
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Score - {new Date().toLocaleString()}
-              </AlertDialogHeader>
+      <AlertDialog
+        isOpen={isOpen}
+        onClose={onClose}
+        leastDestructiveRef={alertRef}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Score - {new Date().toLocaleString()}
+            </AlertDialogHeader>
 
-              <AlertDialogBody>
-                You got {store.score} out of {store.words.length}
-              </AlertDialogBody>
+            <AlertDialogBody>
+              You got {store.score} out of {store.words.length}
+            </AlertDialogBody>
 
-              <AlertDialogFooter>{alertFooterText()}</AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
-      </div>
-    </ErrorBoundary>
+            <AlertDialogFooter>{alertFooterText()}</AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </div>
   );
 };
 
 function DebugOutput() {
   if (process.env.NODE_ENV === 'production') {
-    return;
+    return <></>;
   }
 
   const state = useSnapshot(store);

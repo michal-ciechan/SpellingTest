@@ -1,18 +1,9 @@
 import { proxy, ref } from 'valtio';
-
-let allVoices = window.speechSynthesis
-  .getVoices()
-  .filter((x) => x.name.toLowerCase().includes('english'));
-
-if (allVoices.length == 0) {
-  allVoices = window.speechSynthesis.getVoices();
-}
-
-const voices = allVoices.map((x) => ref(x));
+import { queryClient } from '../App';
 
 export const voiceStore = proxy({
-  voices: ref(voices),
-  voice: voices[0],
+  voices: [] as SpeechSynthesisVoice[],
+  voice: undefined as SpeechSynthesisVoice | undefined,
 });
 
 export const voiceSortValue = (x: SpeechSynthesisVoice): number => {
@@ -35,24 +26,26 @@ export const voiceSortValue = (x: SpeechSynthesisVoice): number => {
   return n;
 };
 
-console.log('Vocie: ', voiceStore.voice);
-
-setTimeout(() => {
-  let allVoices = window.speechSynthesis
+export const getVoices = () => {
+  console.log('Fetching voices at ', new Date());
+  let voices = window.speechSynthesis
     .getVoices()
     .filter((x) => x.name.toLowerCase().includes('english'));
 
-  if (allVoices.length == 0) {
-    allVoices = window.speechSynthesis.getVoices();
+  if (voices.length == 0) {
+    voices = window.speechSynthesis.getVoices();
   }
 
-  const voices = allVoices
-    .filter((x) => x.name.toLowerCase().includes('english'))
+  if (voices.length == 0) {
+    throw 'Could not find any voices. Please report this to Jan Ciechan';
+  }
+
+  const voiceRefs = voices
     .sort((a, b) => voiceSortValue(b) - voiceSortValue(a))
     .map((x) => ref(x));
 
-  voiceStore.voices = ref(voices);
-  voiceStore.voice = voices[0];
+  voiceStore.voices = ref(voiceRefs);
+  voiceStore.voice = voiceRefs[0];
 
-  console.log('Voice: ', voiceStore.voice);
-}, 5);
+  return voiceStore.voices;
+};
