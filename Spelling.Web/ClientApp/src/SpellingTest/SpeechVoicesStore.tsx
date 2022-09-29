@@ -24,6 +24,10 @@ export const voiceSortValue = (x: SpeechSynthesisVoice): number => {
     n += 10;
   }
 
+  if (x.default) {
+    n += 10;
+  }
+
   return n;
 };
 
