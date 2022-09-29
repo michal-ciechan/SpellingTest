@@ -215,7 +215,7 @@ const SpellingTest = () => {
   const snap = useSnapshot(voiceStore);
 
   const voices = rawVoices.map((x) => ({
-    label: x.name,
+    label: `${x.name} (${x.lang})${x.default && ' [default]'}`,
     value: x,
   }));
 
