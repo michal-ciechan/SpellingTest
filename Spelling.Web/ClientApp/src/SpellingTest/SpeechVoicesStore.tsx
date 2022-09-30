@@ -12,7 +12,7 @@ export const voiceSortValue = (x: SpeechSynthesisVoice): number => {
   const name = x.name.toLowerCase();
   const lang = x.lang.toLowerCase();
 
-  if (name.includes('united kingdom') || lang.includes( === 'en-gb') {
+  if (name.includes('united kingdom') || lang.includes('en-gb')) {
     n += 100;
   } else if (name.includes('united state') || lang.includes('en-us')) {
     n += 50;
