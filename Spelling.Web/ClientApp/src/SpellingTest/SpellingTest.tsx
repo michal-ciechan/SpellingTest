@@ -283,7 +283,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      23<sup>rd</sup> Sep 2022
+                      30<sup>th</sup> Sep 2022
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -409,16 +409,19 @@ function alertFooterText() {
 }
 
 const wordsData: WordData[] = [
-  { word: 'there', phrase: 'Could you go over there' },
-  { word: 'their', phrase: 'This is their toy' },
-  { word: "they're", phrase: "Those kids, they're very happy" },
-  { word: 'to', phrase: 'Do you need to go to the toilet' },
-  { word: 'too', phrase: 'I like reading my book too' },
-  { word: 'two', phrase: 'I have two apples' },
-  { word: 'wait', phrase: 'We need to wait for mummy' },
-  { word: 'weight', phrase: 'The weight of a pencil is not very much' },
-  { word: 'whole', phrase: 'How did you eat the whole cake' },
-  { word: 'hole', phrase: 'A fox run away into a hole' },
+  { word: 'who', phrase: 'Who let the dogs out' },
+  { word: 'where', phrase: 'Where are you?' },
+  { word: 'when', phrase: 'When is it lunchtime' },
+  { word: 'what', phrase: 'What are you doing' },
+  { word: 'why', phrase: 'Why did you do that?' },
+  { word: 'how', phrase: 'How did you make that jump?' },
+  { word: 'though', phrase: "I read the book, even though I didn't like it" },
+  { word: 'although', phrase: "Although I wasn't hungry, I ate my lunch" },
+  {
+    word: 'thought',
+    phrase: "I thought that I finished my work, but I didn't",
+  },
+  { word: 'through', phrase: 'In Minecraft, I went through the portal' },
 ];
 
 const store = proxy({
