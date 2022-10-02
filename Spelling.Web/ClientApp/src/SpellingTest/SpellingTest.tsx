@@ -1,9 +1,4 @@
-import React, {
-  MutableRefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -12,12 +7,10 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   Box,
-  BoxProps,
   Button,
   Center,
   Code,
   Heading,
-  HStack,
   Icon,
   Input,
   InputGroup,
@@ -32,30 +25,35 @@ import {
   ModalOverlay,
   Spacer,
   Stack,
-  Text,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { ErrorBoundary } from '../Helpers/ErrorBoundary';
+import {
+  Field,
+  FieldInputProps,
+  FieldProps,
+  Form,
+  Formik,
+  FormikHelpers,
+} from 'formik';
 import { FaPlay } from 'react-icons/fa';
 import { Select } from 'chakra-react-select';
-import { proxy, ref, useSnapshot } from 'valtio';
-import { voiceStore, voiceSortValue, getVoices } from './SpeechVoicesStore';
-import { proxySet } from 'valtio/utils';
+import { proxy, useSnapshot } from 'valtio';
+import { getVoices, voiceStore } from './SpeechVoicesStore';
+import { proxyMap, proxySet } from 'valtio/utils';
 import { useQuery } from 'react-query';
-import { useSuspendable } from '../Helpers/suspendable';
 import { useStatefulSuspense } from '../StatefulSuspenseContext';
-import { useStatefulSuspense } from '../StatefulSuspenseContext';
-
-export const MotionBox = motion<BoxProps>(Box);
+import { fixCircularReferences } from './FixCircularReferences';
 
 interface WordInputProps {
   number: number;
   data: WordData;
-  currentRef: MutableRefObject<HTMLElement | undefined>;
-  nextRef: MutableRefObject<HTMLElement | undefined>;
+  currentRef: MutableRefObject<HTMLInputElement | null>;
+  nextRef: MutableRefObject<HTMLInputElement | null>;
+}
+
+interface WordState {
+  data: WordData;
+  currentState?: 'success' | 'error';
 }
 
 function speak(...params: string[]) {
@@ -76,39 +74,26 @@ function speak(...params: string[]) {
 }
 
 const WordInput = (props: WordInputProps) => {
-  const fakeInput = useRef<HTMLInputElement>();
+  const fakeInput = useRef<HTMLInputElement | null>(null);
+
+  const data = props.data;
 
   const onFocus = () => {
-    const word = props.data.word;
+    const word = data.word;
     console.log(`Play Word ${word}`);
 
     console.log(voiceStore.voice?.name);
 
-    speak(word, props.data.phrase, 'The word is ' + word);
+    speak(word, data.phrase, 'The word is ' + word);
 
     fakeInput.current?.focus();
   };
 
   const name = `words[${props.number - 1}]`;
 
-  function fixCircularReferences() {
-    const defs = {};
-    return (k, v) => {
-      if (typeof k === 'string') {
-        if (k.startsWith('_react')) return undefined;
-        if (k.startsWith('__react')) return undefined;
-        if (k === 'window') return undefined;
-        if (k === 'view') return undefined;
-      }
-      const def = defs[v];
-      if (def && typeof v == 'object') return '[same as ' + def + ']';
-      defs[v] = k;
-      return v;
-    };
-  }
   return (
     <Field name={name}>
-      {({ field, form }) => (
+      {({ field, form }: FieldProps) => (
         <>
           <InputGroup>
             <InputLeftAddon
@@ -119,6 +104,7 @@ const WordInput = (props: WordInputProps) => {
               zIndex={1}
             />
             <Input // fake input
+              isInvalid={data.status === 'error'}
               style={{ position: 'absolute', caretColor: 'transparent' }}
               ref={fakeInput}
               zIndex={-1}
@@ -138,6 +124,7 @@ const WordInput = (props: WordInputProps) => {
                       field.name,
                       field.value.slice(0, field.value.length - 1),
                     );
+                    data.status = undefined;
                   }
                 }
               }}
@@ -154,6 +141,7 @@ const WordInput = (props: WordInputProps) => {
 
                 form.setFieldValue(field.name, field.value + v);
                 event.target.value = '';
+                data.status = undefined;
               }}
             />
             <Input
@@ -166,11 +154,8 @@ const WordInput = (props: WordInputProps) => {
               onFocus={onFocus}
               onChange={(event) => {
                 const v = event.target.value;
-
-                // form.setFieldValue(field.name, v);
                 console.log(v, form, field);
                 event.preventDefault();
-                // props.nextRef?.current?.focus();
               }}
               zIndex={1}
             />
@@ -206,7 +191,11 @@ const SpellingTest = () => {
 
   const queryPromise = useQuery('voices', getVoices);
 
-  const rawVoices = queryPromise.data!;
+  const rawVoices = queryPromise.data;
+
+  if (!rawVoices) {
+    throw 'No Voices';
+  }
 
   const initialValues: FormValues = {
     words: wordsData.map(() => ''),
@@ -223,10 +212,10 @@ const SpellingTest = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const refs: MutableRefObject<HTMLElement | undefined>[] = [];
+  const refs: MutableRefObject<HTMLInputElement | null>[] = [];
 
   for (let i = 0; i < 11; i++) {
-    refs[i] = useRef<HTMLElement>();
+    refs[i] = useRef<HTMLInputElement>(null);
   }
 
   const onSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
@@ -313,7 +302,6 @@ const SpellingTest = () => {
                   options={voices}
                   value={selectedVoice}
                   onChange={(x) => (voiceStore.voice = x!.value)}
-                  styles={{ width: 'auto' }}
                 />
               </Stack>
             </Form>
