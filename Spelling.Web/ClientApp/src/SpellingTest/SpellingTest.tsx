@@ -146,6 +146,7 @@ const WordInput = (props: WordInputProps) => {
             />
             <Input
               {...field}
+              isInvalid={data.status === 'error'}
               placeholder={`Enter Word ${props.number}`}
               autoComplete="off"
               autoCorrect="false"
