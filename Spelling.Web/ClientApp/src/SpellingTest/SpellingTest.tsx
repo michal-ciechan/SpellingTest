@@ -273,7 +273,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      30<sup>th</sup> Sep 2022
+                      7<sup>th</sup> Oct 2022
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -398,19 +398,39 @@ function alertFooterText() {
 }
 
 const wordsData: WordData[] = [
-  { word: 'who', phrase: 'Who let the dogs out' },
-  { word: 'where', phrase: 'Where are you?' },
-  { word: 'when', phrase: 'When is it lunchtime' },
-  { word: 'what', phrase: 'What are you doing' },
-  { word: 'why', phrase: 'Why did you do that?' },
-  { word: 'how', phrase: 'How did you make that jump?' },
-  { word: 'though', phrase: "I read the book, even though I didn't like it" },
-  { word: 'although', phrase: "Although I wasn't hungry, I ate my lunch" },
+  { word: 'romans', phrase: 'the romans conquered England' },
+  { word: 'empire', phrase: 'the Roman Empire was strong' },
   {
-    word: 'thought',
-    phrase: "I thought that I finished my work, but I didn't",
+    word: 'invade',
+    phrase: 'Julius Caesar tried to invade Britain but he failed',
   },
-  { word: 'through', phrase: 'In Minecraft, I went through the portal' },
+  { word: 'tribe', phrase: 'the Celts were a British tribe' },
+  {
+    word: 'battle',
+    phrase: 'a large fight between two armies is called a battle',
+  },
+  { word: 'army', phrase: 'the Romans had a big army' },
+  {
+    word: 'history',
+    phrase:
+      'yesterday was history, tomorrow is a mystery, and today is a gift, that is why we call' +
+      ' it present',
+  },
+  {
+    word: 'event',
+    phrase:
+      'The Roman invasion of Britain could be the most significant event ever to happen in Britain',
+  },
+  {
+    word: 'change',
+    phrase: 'How did the Romans change Britain',
+  },
+  {
+    word: 'evidence',
+    phrase:
+      'We still have evidence of the Romans being in Britain, such as ruins of buildings,' +
+      ' forts, roads and baths.',
+  },
 ];
 
 const store = proxy({
