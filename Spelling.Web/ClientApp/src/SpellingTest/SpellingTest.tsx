@@ -273,7 +273,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      7<sup>th</sup> Oct 2022
+                      14<sup>th</sup> Oct 2022
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -398,38 +398,33 @@ function alertFooterText() {
 }
 
 const wordsData: WordData[] = [
-  { word: 'romans', phrase: 'the romans conquered England' },
-  { word: 'empire', phrase: 'the Roman Empire was strong' },
+  { word: 'fact', phrase: 'books are often categorised into fact or fiction' },
+  { word: 'summary', phrase: 'a summary is a short description of something' },
   {
-    word: 'invade',
-    phrase: 'Julius Caesar tried to invade Britain but he failed',
+    word: 'recap',
+    phrase: 'could you recap the story for me?',
   },
-  { word: 'tribe', phrase: 'the Celts were a British tribe' },
+  { word: 'heading', phrase: 'this book has big chapter headings' },
   {
-    word: 'battle',
-    phrase: 'a large fight between two armies is called a battle',
+    word: 'subheading',
+    phrase: 'have you seen the subheadings in chapter two',
   },
-  { word: 'army', phrase: 'the Romans had a big army' },
+  { word: 'report', phrase: 'my school report card was positive' },
   {
-    word: 'history',
-    phrase:
-      'yesterday was history, tomorrow is a mystery, and today is a gift, that is why we call' +
-      ' it present',
+    word: 'diagram',
+    phrase: 'i drew a diagram of my house',
   },
   {
-    word: 'event',
-    phrase:
-      'The Roman invasion of Britain could be the most significant event ever to happen in Britain',
+    word: 'paragraph',
+    phrase: 'did you like the last paragraph of the book?',
   },
   {
-    word: 'change',
-    phrase: 'How did the Romans change Britain',
+    word: 'words',
+    phrase: 'there are too many words in my current book',
   },
   {
-    word: 'evidence',
-    phrase:
-      'We still have evidence of the Romans being in Britain, such as ruins of buildings,' +
-      ' forts, roads and baths.',
+    word: 'glossary',
+    phrase: 'at the back of a book, there is a glossary',
   },
 ];
 
