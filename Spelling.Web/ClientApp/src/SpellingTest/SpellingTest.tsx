@@ -404,10 +404,13 @@ const wordsData: WordData[] = [
     word: 'recap',
     phrase: 'could you recap the story for me?',
   },
-  { word: 'heading', phrase: 'this book has big chapter headings' },
+  {
+    word: 'heading',
+    phrase: 'this book has an interesting heading in chapter 1',
+  },
   {
     word: 'subheading',
-    phrase: 'have you seen the subheadings in chapter two',
+    phrase: 'have you seen the first subheading in chapter two',
   },
   { word: 'report', phrase: 'my school report card was positive' },
   {
