@@ -273,7 +273,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      14<sup>th</sup> Oct 2022
+                      20<sup>th</sup> Oct 2022
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -398,36 +398,36 @@ function alertFooterText() {
 }
 
 const wordsData: WordData[] = [
-  { word: 'fact', phrase: 'books are often categorised into fact or fiction' },
-  { word: 'summary', phrase: 'a summary is a short description of something' },
+  { word: 'action', phrase: 'could you action my request' },
+  { word: 'station', phrase: 'a little boy went to the train station' },
   {
-    word: 'recap',
-    phrase: 'could you recap the story for me?',
+    word: 'fiction',
+    phrase: 'today, I read a non fiction book',
   },
   {
-    word: 'heading',
-    phrase: 'this book has an interesting heading in chapter 1',
+    word: 'motion',
+    phrase: 'i filmed myself in slow motion',
   },
   {
-    word: 'subheading',
-    phrase: 'have you seen the first subheading in chapter two',
+    word: 'nation',
+    phrase: 'England is the best nation in football',
   },
-  { word: 'report', phrase: 'my school report card was positive' },
+  { word: 'national', phrase: 'the national anthem has recently changed' },
   {
-    word: 'diagram',
-    phrase: 'i drew a diagram of my house',
-  },
-  {
-    word: 'paragraph',
-    phrase: 'did you like the last paragraph of the book?',
+    word: 'section',
+    phrase: 'kids like the sweets section in the shop',
   },
   {
-    word: 'words',
-    phrase: 'there are too many words in my current book',
+    word: 'position',
+    phrase: 'defending is my favourite position in football',
   },
   {
-    word: 'glossary',
-    phrase: 'at the back of a book, there is a glossary',
+    word: 'solution',
+    phrase: 'the solution to my maths question was 69',
+  },
+  {
+    word: 'operation',
+    phrase: 'the doctor succeeded in his heart operation',
   },
 ];
 
