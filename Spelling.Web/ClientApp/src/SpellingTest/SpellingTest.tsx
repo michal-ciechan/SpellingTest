@@ -273,7 +273,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      20<sup>th</sup> Oct 2022
+                      4<sup>th</sup> Nov 2022
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -398,36 +398,36 @@ function alertFooterText() {
 }
 
 const wordsData: WordData[] = [
-  { word: 'action', phrase: 'could you action my request' },
-  { word: 'station', phrase: 'a little boy went to the train station' },
+  { word: 'united', phrase: 'we stand united against bullying' },
+  { word: 'kingdom', phrase: 'a territory ruled by a king or queen is a kingdom' },
   {
-    word: 'fiction',
-    phrase: 'today, I read a non fiction book',
+    word: 'England',
+    phrase: 'england is the largest country in united kingdom',
   },
   {
-    word: 'motion',
-    phrase: 'i filmed myself in slow motion',
+    word: 'south west',
+    phrase: 'Torquay is in the south west of England',
   },
   {
-    word: 'nation',
-    phrase: 'England is the best nation in football',
+    word: 'region',
+    phrase: 'Toraby is a region in Devon',
   },
-  { word: 'national', phrase: 'the national anthem has recently changed' },
+  { word: 'physical', phrase: 'we are in a physical world, where as minecraft has many virtual worlds' },
   {
-    word: 'section',
-    phrase: 'kids like the sweets section in the shop',
-  },
-  {
-    word: 'position',
-    phrase: 'defending is my favourite position in football',
+    word: 'country',
+    phrase: 'England is a country in united kingdom',
   },
   {
-    word: 'solution',
-    phrase: 'the solution to my maths question was 69',
+    word: 'county',
+    phrase: 'Devon is a county in england',
   },
   {
-    word: 'operation',
-    phrase: 'the doctor succeeded in his heart operation',
+    word: 'land',
+    phrase: 'land surrounded by water is an island',
+  },
+  {
+    word: 'area',
+    phrase: 'england has the largest area in united kingdom',
   },
 ];
 
