@@ -273,7 +273,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      4<sup>th</sup> Nov 2022
+                      18<sup>th</sup> Nov 2022
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -397,39 +397,50 @@ function alertFooterText() {
   return 'Keep Practicing!';
 }
 
-const wordsData: WordData[] = [
-  { word: 'united', phrase: 'we stand united against bullying' },
-  { word: 'kingdom', phrase: 'a territory ruled by a king or queen is a kingdom' },
+const wordsData: WordData[] = 
+[
   {
-    word: 'England',
-    phrase: 'england is the largest country in united kingdom',
+    "word": "Lead",
+    "phrase": "I will lead you to success"
   },
   {
-    word: 'south west',
-    phrase: 'Torquay is in the south west of England',
+    "word": "Leader",
+    "phrase": "Our team captain is a good leader"
   },
   {
-    word: 'region',
-    phrase: 'Toraby is a region in Devon',
-  },
-  { word: 'physical', phrase: 'we are in a physical world, where as minecraft has many virtual worlds' },
-  {
-    word: 'country',
-    phrase: 'England is a country in united kingdom',
+    "word": "Ledership",
+    "phrase": "The leadership at this school is very good"
   },
   {
-    word: 'county',
-    phrase: 'Devon is a county in england',
+    "word": "fair",
+    "phrase": "Our leader is very fair and just"
   },
   {
-    word: 'land',
-    phrase: 'land surrounded by water is an island',
+    "word": "fairness",
+    "phrase": "Fairness is important in our school"
   },
   {
-    word: 'area',
-    phrase: 'england has the largest area in united kingdom',
+    "word": "inspire",
+    "phrase": "my friends inspire me to be better"
   },
-];
+  {
+    "word": "others",
+    "phrase": "I try to inspire others to always improve"
+  },
+  {
+    "word": "determination",
+    "phrase": "I have a lot of determination to succeed and never give up"
+  },
+  {
+    "word": "different",
+    "phrase": "everyone is different"
+  },
+  {
+    "word": "difference",
+    "phrase": "There is no difference between them"
+  }
+]
+;
 
 const store = proxy({
   words: wordsData,
