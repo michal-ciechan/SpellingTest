@@ -273,7 +273,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      18<sup>th</sup> Nov 2022
+                      2<sup>nd</sup> Dec 2022
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -400,44 +400,44 @@ function alertFooterText() {
 const wordsData: WordData[] = 
 [
   {
-    "word": "Lead",
-    "phrase": "I will lead you to success"
+    "word": "Story",
+    "phrase": "Will you tell me a story?"
   },
   {
-    "word": "Leader",
-    "phrase": "Our team captain is a good leader"
+    "word": "Stories",
+    "phrase": "I like reading stories before bedtime"
   },
   {
-    "word": "Ledership",
-    "phrase": "The leadership at this school is very good"
+    "word": "Character",
+    "phrase": "Luke is my favourite character in Star Wars"
   },
   {
-    "word": "fair",
-    "phrase": "Our leader is very fair and just"
+    "word": "Tale",
+    "phrase": "My friend wrote a fairy tale"
   },
   {
-    "word": "fairness",
-    "phrase": "Fairness is important in our school"
+    "word": "Write",
+    "phrase": "I will write my own story"
   },
   {
-    "word": "inspire",
-    "phrase": "my friends inspire me to be better"
+    "word": "Writing",
+    "phrase": "Writing stories is my favourite activity"
   },
   {
-    "word": "others",
-    "phrase": "I try to inspire others to always improve"
+    "word": "Setting",
+    "phrase": "The setting of my story will be my school"
   },
   {
-    "word": "determination",
-    "phrase": "I have a lot of determination to succeed and never give up"
+    "word": "Paragraph",
+    "phrase": "I have finished writing my first paragraph"
   },
   {
-    "word": "different",
-    "phrase": "everyone is different"
+    "word": "Traditional",
+    "phrase": "My story will contain items from traditional culture"
   },
   {
-    "word": "difference",
-    "phrase": "There is no difference between them"
+    "word": "Language",
+    "phrase": "I will write my story in the English Language"
   }
 ]
 ;
