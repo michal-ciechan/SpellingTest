@@ -273,7 +273,7 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      2<sup>nd</sup> Dec 2022
+                      6<sup>th</sup> Jan 2023
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -400,44 +400,44 @@ function alertFooterText() {
 const wordsData: WordData[] = 
 [
   {
-    "word": "Story",
-    "phrase": "Will you tell me a story?"
+    "word": "Humans",
+    "phrase": "There are 11 billion humans on this world"
   },
   {
-    "word": "Stories",
-    "phrase": "I like reading stories before bedtime"
+    "word": "Animals",
+    "phrase": "I love watching animals at the zoo"
   },
   {
-    "word": "Character",
-    "phrase": "Luke is my favourite character in Star Wars"
+    "word": "Skeleton",
+    "phrase": "Our bodies have a skeleton inside to help us stand up straight and move around"
   },
   {
-    "word": "Tale",
-    "phrase": "My friend wrote a fairy tale"
+    "word": "Bones",
+    "phrase": "We have 206 bones in our body"
   },
   {
-    "word": "Write",
-    "phrase": "I will write my own story"
+    "word": "Muscles",
+    "phrase": "Our muscles help us move our bodies and lift things"
   },
   {
-    "word": "Writing",
-    "phrase": "Writing stories is my favourite activity"
+    "word": "Health",
+    "phrase": "Exercise is important for our health. It helps our hearts and muscles stay strong"
   },
   {
-    "word": "Setting",
-    "phrase": "The setting of my story will be my school"
+    "word": "Healthy",
+    "phrase": "Eating healthy foods like fruits and vegetables helps us grow strong and healthy
   },
   {
-    "word": "Paragraph",
-    "phrase": "I have finished writing my first paragraph"
+    "word": "Survive",
+    "phrase": "You have to drink water to survive"
   },
   {
-    "word": "Traditional",
-    "phrase": "My story will contain items from traditional culture"
+    "word": "Nutrients",
+    "phrase": "Milk has nutrients that help our bones stay healthy"
   },
   {
-    "word": "Language",
-    "phrase": "I will write my story in the English Language"
+    "word": "Bodies",
+    "phrase": "We have to take care of our bodies by eating healthy foods and exercising"
   }
 ]
 ;
