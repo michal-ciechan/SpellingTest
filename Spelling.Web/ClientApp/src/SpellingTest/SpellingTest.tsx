@@ -426,7 +426,7 @@ const wordsData: WordData[] =
   },
   {
     "word": "Healthy",
-    "phrase": "Eating healthy foods like fruits and vegetables helps us grow strong and healthy
+    "phrase": "Eating healthy foods like fruits and vegetables helps us grow strong and healthy"
   },
   {
     "word": "Survive",
