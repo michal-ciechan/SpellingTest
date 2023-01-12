@@ -398,6 +398,7 @@ function alertFooterText() {
 }
 
 const wordsData: WordData[] = 
+  
 [
   {
     "word": "Humans",
