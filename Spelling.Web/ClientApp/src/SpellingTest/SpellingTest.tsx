@@ -27,22 +27,17 @@ import {
   Stack,
   useDisclosure,
 } from '@chakra-ui/react';
-import {
-  Field,
-  FieldInputProps,
-  FieldProps,
-  Form,
-  Formik,
-  FormikHelpers,
-} from 'formik';
+import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import { FaPlay } from 'react-icons/fa';
 import { Select } from 'chakra-react-select';
 import { proxy, useSnapshot } from 'valtio';
 import { getVoices, voiceStore } from './SpeechVoicesStore';
-import { proxyMap, proxySet } from 'valtio/utils';
+import { proxySet } from 'valtio/utils';
 import { useQuery } from 'react-query';
 import { useStatefulSuspense } from '../StatefulSuspenseContext';
 import { fixCircularReferences } from './FixCircularReferences';
+import { dayData, WordData } from './DayData';
+import { format, parseISO } from 'date-fns';
 
 interface WordInputProps {
   number: number;
@@ -175,14 +170,24 @@ const WordInput = (props: WordInputProps) => {
     </Field>
   );
 };
-interface WordData {
-  status?: undefined | 'success' | 'error';
-  word: string;
-  phrase: string;
-}
 
 interface FormValues {
   words: string[];
+}
+
+function getOrdinalIndicator(date: Date) {
+  const day = date.getUTCDate();
+
+  // Determine the ordinal indicator
+  if (day === 1 || day === 21 || day === 31) {
+    return 'st';
+  } else if (day === 2 || day === 22) {
+    return 'nd';
+  } else if (day === 3 || day === 23) {
+    return 'rd';
+  } else {
+    return 'th';
+  }
 }
 
 const SpellingTest = () => {
@@ -251,6 +256,13 @@ const SpellingTest = () => {
 
   const alertRef = useRef<HTMLButtonElement>(null);
 
+  const date = parseISO(dayData.date);
+
+  const day = date.getUTCDate();
+  const ordinalIndicator = getOrdinalIndicator(date);
+  const monthYear = format(date, 'LLL yyyy');
+
+  date.getDay();
   return (
     <div
       style={{
@@ -273,7 +285,8 @@ const SpellingTest = () => {
                   </Center>
                   <Center>
                     <Heading>
-                      6<sup>th</sup> Jan 2023
+                      {day}
+                      <sup>{ordinalIndicator}</sup> {monthYear}
                     </Heading>
                   </Center>
                   {wordsData.map((word, index) => (
@@ -397,52 +410,7 @@ function alertFooterText() {
   return 'Keep Practicing!';
 }
 
-const wordsData: WordData[] = 
-  
-[
-  {
-    "word": "Humans",
-    "phrase": "There are 11 billion humans on this world"
-  },
-  {
-    "word": "Animals",
-    "phrase": "I love watching animals at the zoo"
-  },
-  {
-    "word": "Skeleton",
-    "phrase": "Our bodies have a skeleton inside to help us stand up straight and move around"
-  },
-  {
-    "word": "Bones",
-    "phrase": "We have 206 bones in our body"
-  },
-  {
-    "word": "Muscles",
-    "phrase": "Our muscles help us move our bodies and lift things"
-  },
-  {
-    "word": "Health",
-    "phrase": "Exercise is important for our health. It helps our hearts and muscles stay strong"
-  },
-  {
-    "word": "Healthy",
-    "phrase": "Eating healthy foods like fruits and vegetables helps us grow strong and healthy"
-  },
-  {
-    "word": "Survive",
-    "phrase": "You have to drink water to survive"
-  },
-  {
-    "word": "Nutrients",
-    "phrase": "Milk has nutrients that help our bones stay healthy"
-  },
-  {
-    "word": "Bodies",
-    "phrase": "We have to take care of our bodies by eating healthy foods and exercising"
-  }
-]
-;
-
+const wordsData: WordData[] = dayData.words;
 const store = proxy({
   words: wordsData,
   score: 0,
