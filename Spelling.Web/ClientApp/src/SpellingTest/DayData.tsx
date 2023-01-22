@@ -10,52 +10,52 @@ export interface WordData {
 }
 
 export const dayData: DayData = {
-  date: '2023-01-13',
+  date: '2023-01-20',
   words: [
     {
-      word: 'fruit',
-      phrase: 'Fruit is the yummy part of a plant that we eat',
+      word: 'quickly',
+      phrase: 'running quickly like a cheetah',
     },
     {
-      word: 'vegetable',
-      phrase: 'A vegetable garden is a fun way to grow your own food',
+      word: 'quietly',
+      phrase: 'quietly tiptoe like a cat trying to catch a mouse',
     },
     {
-      word: 'protein',
-      phrase: 'Protein is like the building blocks for our bodies',
+      word: 'slowly',
+      phrase: 'move slowly like a snail',
     },
     {
-      word: 'carbohydrate',
-      phrase: 'Carbohydrates are a type of food that gives our body energy',
+      word: 'excitedly',
+      phrase: 'jump excitedly like a kangaroo',
     },
     {
-      word: 'water',
+      word: 'happily',
       phrase:
-        'Water is a clear and colorless liquid that is essential for life',
+        'He smiled happily like a sunflower',
     },
     {
-      word: 'minerals',
+      word: 'purposefully',
       phrase:
-        'Minerals are special types of substances that our body needs to stay healthy',
+        'Walk purposefully like a soldier on a mission',
     },
     {
-      word: 'vitamins',
+      word: 'adventurously',
       phrase:
-        'Vitamins help us to grow, keep our skin looking good, and to keep us from getting sick',
+        'adventurously climb a mountain',
     },
     {
-      word: 'growth',
-      phrase: 'Growth is when something gets bigger and taller',
+      word: 'rapidly',
+      phrase: 'swim rapidly like a shark',
     },
     {
-      word: 'explore',
+      word: 'proudly',
       phrase:
-        'We can explore the world around us by going for a walk in the park, visiting a museum, or even by reading a book',
+        'stand tall proudly, like a peacock showing off its feathers',
     },
     {
-      word: 'explorer',
+      word: 'anxiously',
       phrase:
-        'An explorer is someone who goes on adventures to discover new places',
+        'He is fidgeting anxiously like a child waiting for christmas morning',
     },
   ],
 };
