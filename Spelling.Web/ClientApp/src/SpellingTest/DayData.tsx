@@ -32,6 +32,6 @@ export const dayData: DayData = {
     { word: 'Informal', phrase: 'The gathering was informal and relaxed' },
     { word: 'Incomplete', phrase: 'The homework submitted was incomplete' },
     { word: 'Misbehave', phrase: 'You should not misbehave in school' },
-    { word: 'Misunderstanding', phrase: 'There was a misunderstanding between us' }, s
+    { word: 'Misunderstanding', phrase: 'There was a misunderstanding between us' },
   ],
 };
