@@ -10,28 +10,32 @@ export interface WordData {
 }
 
 // Put the following words in the above data for a 8 year old:
-// Disagree
-// Dislike
-// Discourage
-// Inactive
-// Incorrect
-// Informal
-// Incomplete
-// Misbehave
-// Misunderstanding
+// address
+// appear
+// arrive
+// different
+// difficult
+// disappear
+// grammar
+// occasion
+// opposite
+// pressure
+// support
 
 // export const dayData: DayData = { ... }
 export const dayData: DayData = {
-  date: "2023-02-03",
+  date: '2023-02-24',
   words: [
-    { word: 'Disagree', phrase: 'I disagree with your opinion' },
-    { word: 'Dislike', phrase: 'I dislike spicy food' },
-    { word: 'Discourage', phrase: 'His parents discouraged him from quitting school' },
-    { word: 'Inactive', phrase: 'Kilimanjaro is an inactive volcano' },
-    { word: 'Incorrect', phrase: 'Your answer is incorrect' },
-    { word: 'Informal', phrase: 'The gathering was informal and relaxed' },
-    { word: 'Incomplete', phrase: 'The homework submitted was incomplete' },
-    { word: 'Misbehave', phrase: 'You should not misbehave in school' },
-    { word: 'Misunderstanding', phrase: 'There was a misunderstanding between us' },
-  ],
+    { word: 'address', phrase: 'My school address is Barton Road, Torquay.' },
+    { word: 'appear', phrase: 'The sun will appear in the sky every morning.' },
+    { word: 'arrive', phrase: 'I will arrive at the park at 3pm.' },
+    { word: 'different', phrase: 'Apples and oranges are different fruits.' },
+    { word: 'difficult', phrase: 'This math problem is very difficult.' },
+    { word: 'disappear', phrase: 'The magician made the rabbit disappear.' },
+    { word: 'grammar', phrase: 'Learning proper grammar is important.' },
+    { word: 'occasion', phrase: 'Birthday is my favourite special occasion.' },
+    { word: 'opposite', phrase: 'Up and down are opposite directions.' },
+    { word: 'pressure', phrase: 'The air pressure changes when we go up a mountain.' },
+    { word: 'support', phrase: 'Will you support me when I try the big ramp.' }
+  ]
 };
