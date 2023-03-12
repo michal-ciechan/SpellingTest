@@ -79,7 +79,7 @@ const WordInput = (props: WordInputProps) => {
 
     console.log(voiceStore.voice?.name);
 
-    speak(word, data.phrase, 'The word is ' + word);
+    speak(word, 'Phrase' , data.phrase, 'Definition', data.definition , 'The word is ' + word);
 
     fakeInput.current?.focus();
   };
