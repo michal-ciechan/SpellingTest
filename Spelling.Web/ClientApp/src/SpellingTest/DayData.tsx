@@ -14,71 +14,71 @@ export interface WordData {
 // using the exact term and tense ignoring status property
 // and where the example usage is different
 // where date is 2023-03-17:
-// great
-// grate (noun geography)
-// elephant
-// chase
-// river
-// mountain
-// animals
-// creeping
-// scurrying
-// caught
+// quickly
+// slowly
+// suddenly
+// quietly
+// angrily
+// carefully
+// nervously
+// excitedly
+// happily
+// cautiously
 
 // export const dayData: DayData = { ... }
 
 export const dayData: DayData = {
-  date: '2023-03-17',
+  date: '2023-03-24',
   words: [
     {
-      word: 'great',
-      phrase: 'I had a great time at the party.',
-      definition: 'very good or impressive'
+      word: 'quickly',
+      phrase: 'She ran quickly to catch the bus.',
+      definition: 'at a fast speed; rapidly'
     },
     {
-      word: 'grate',
-      phrase: 'The grate was covered with dirt.',
-      definition: 'a frame of metal bars that is used to cover an opening to a drain in the ground'
+      word: 'slowly',
+      phrase: 'The turtle walked slowly across the road.',
+      definition: 'at a low speed; not quickly'
     },
     {
-      word: 'elephant',
-      phrase: 'The elephant had a long trunk.',
-      definition: 'a very large animal with a long nose'
+      word: 'suddenly',
+      phrase: 'The thunderstorm arrived suddenly in the middle of the day.',
+      definition: 'happening or done without warning; unexpectedly'
     },
     {
-      word: 'chase', 
-      phrase: 'Did you see the dog chase the cat?',
-      definition: 'to run after someone or something in order to catch them'
+      word: 'quietly',
+      phrase: "Please close the door quietly so you don't wake the baby.",
+definition: 'in a way that makes little noise; silently'
+},
+    {
+      word: 'angrily',
+      phrase: 'The teacher scolded the student angrily for not doing his homework.',
+      definition: 'in a way that shows anger or irritation; with rage'
     },
     {
-      word: 'river',
-      phrase: 'The river flows into the ocean.',
-      definition: 'a large stream of water that flows into the sea'
+      word: 'carefully',
+      phrase: "He handled the fragile vase carefully so it wouldn't break.",
+definition: 'with great attention, caution, or care; cautiously'
+},
+    {
+      word: 'nervously',
+      phrase: 'She tapped her foot nervously while waiting for the interview.',
+      definition: 'in a way that shows nervousness or anxiety; apprehensively'
     },
     {
-      word: 'mountain',
-      phrase: 'I climbed a mountain in Peak Districts.',
-      definition: 'a large natural hill with a flat top'
+      word: 'excitedly',
+      phrase: 'The children shouted excitedly when they saw the fireworks.',
+      definition: 'in a way that shows enthusiasm, eagerness, or anticipation; eagerly'
     },
     {
-      word: 'animals',
-      phrase: 'I like to watch animals in the zoo.',
-      definition: 'living things that are not people'
+      word: 'happily',
+      phrase: 'They danced happily at their wedding reception.',
+      definition: 'in a way that shows joy, contentment, or pleasure; joyfully'
     },
     {
-      word: 'creeping',
-      phrase: 'The mouse was creeping through the grass.',
-      definition: 'moving slowly and quietly'
-    },
-    {
-      word: 'scurrying',
-      phrase: 'The squirrel was scurrying through the leaves.',
-      definition: 'moving quickly and quietly'
-    },
-    {
-      word: 'caught',
-      phrase: 'I caught a fish in the river.',
-      definition: 'to get something that is moving'
+      word: 'cautiously',
+      phrase: 'The hiker moved cautiously along the narrow and rocky trail.',
+      definition: 'in a way that shows carefulness, wariness, or prudence; carefully'
     }
   ]
 };
